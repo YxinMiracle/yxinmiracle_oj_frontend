@@ -3,8 +3,25 @@ import HomeView from "@/views/HomeView.vue";
 import AdminView from "@/views/AdminView.vue";
 import NoAuth from "@/views/NoAuth.vue";
 import accessEnum from "@/access/accessEnum";
+import UserLoginView from "@/views/user/UserLoginView.vue";
+import UserLayout from "@/layouts/UserLayout.vue";
 
 export const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/user",
+    name: "用户",
+    component: UserLayout,
+    children: [
+      {
+        path: "/user/login",
+        name: "用户登录",
+        component: UserLoginView,
+      },
+    ],
+    meta: {
+      hideInMenu: true,
+    },
+  },
   {
     path: "/",
     name: "浏览题目",
