@@ -26,7 +26,6 @@
 }
 
 #basicLayout .content {
-  background: linear-gradient(to right, #c7c7c7, #fff);
   margin-bottom: 16px;
   padding: 20px;
 }
@@ -42,5 +41,5 @@
 }
 </style>
 <script setup lang="ts">
-import GlobalHeader from "@/layouts/GlobalHeader.vue";
+import GlobalHeader from "@/components/GlobalHeader.vue";
 </script>

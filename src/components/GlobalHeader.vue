@@ -38,14 +38,13 @@
 
 <script setup lang="ts">
 import { routes } from "../router/routes";
-import { useRoute, useRouter } from "vue-router";
-import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
-import accessEnum from "@/access/accessEnum";
+import ACCESS_ENUM from "@/access/accessEnum";
 import { UserControllerService } from "../../generated";
 import { Message } from "@arco-design/web-vue";
-import ACCESS_ENUM from "@/access/accessEnum";
 
 const router = useRouter();
 const store = useStore();
@@ -126,6 +125,8 @@ const userLoginStateClick = async () => {
 }
 
 .subLoginCard {
+  z-index: 100;
+  background: white;
   position: absolute;
   width: 100px;
   height: 60px;

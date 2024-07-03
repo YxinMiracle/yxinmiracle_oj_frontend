@@ -8,6 +8,7 @@ const checkAccess = (loginUser: any, needAccess = ACCESS_ENUM.NOT_LOGIN) => {
   }
   if (needAccess === ACCESS_ENUM.USER) {
     // todo 只需要判断登录就可以
+    console.log(">>>>", loginUserAccess);
     if (loginUserAccess === ACCESS_ENUM.NOT_LOGIN) {
       return false;
     }
