@@ -1,7 +1,6 @@
 import { StoreOptions } from "vuex";
-import accessEnum from "@/access/accessEnum";
-import { UserControllerService } from "../../generated";
 import ACCESS_ENUM from "@/access/accessEnum";
+import { UserControllerService } from "../../generated";
 
 export default {
   namespaced: true,

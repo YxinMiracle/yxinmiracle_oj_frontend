@@ -1,14 +1,26 @@
 <template>
   <div class="home">
+    <CodeEditor :value="codeValue" :handle-change="onCodeChange"></CodeEditor>
+    <MdEditor :value="mdValue" :handle-change="onMdChange"></MdEditor>
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { defineComponent, ref } from "vue";
+import MdEditor from "@/components/MdEditor.vue";
+import CodeEditor from "@/components/CodeEditor.vue";
 
-export default defineComponent({
-  name: "HomeView",
-});
+const codeValue = ref();
+const mdValue = ref();
+
+const onCodeChange = (v: string) => {
+  codeValue.value = v;
+  console.log(v);
+};
+
+const onMdChange = (v: string) => {
+  mdValue.value = v;
+  console.log(v);
+};
 </script>

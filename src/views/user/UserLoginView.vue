@@ -28,7 +28,7 @@
 import { reactive, ref } from "vue";
 import { UserControllerService, UserLoginRequest } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const loading = ref(false);

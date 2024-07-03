@@ -5,6 +5,11 @@ import NoAuth from "@/views/NoAuth.vue";
 import accessEnum from "@/access/accessEnum";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserLayout from "@/layouts/UserLayout.vue";
+import AddQuestionView from "@/views/question/AddQuestionView.vue";
+import ManageQuestionView from "@/views/question/QuestionManageView.vue";
+import QuestionsView from "@/views/question/QuestionsView.vue";
+import ViewQuestionsView from "@/views/question/ViewQuestionsView.vue";
+import AccessEnum from "@/access/accessEnum";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -23,30 +28,60 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/",
+    path: "/questions",
     name: "浏览题目",
-    component: HomeView,
+    component: QuestionsView,
   },
   {
-    path: "/hide",
-    name: "隐藏页面",
-    component: HomeView,
+    path: "/view/question/:id",
+    name: "在线作题",
+    component: ViewQuestionsView,
+    props: true,
+    meta: {
+      hideInMenu: true,
+      access: AccessEnum.USER,
+    },
+  },
+  {
+    path: "/",
+    name: "主页",
+    component: QuestionsView,
     meta: {
       hideInMenu: true,
     },
   },
   {
-    path: "/admin",
-    name: "管理员功能",
-    component: AdminView,
+    path: "/add/question",
+    name: "创建题目",
+    component: AddQuestionView,
     meta: {
-      access: accessEnum.ADMIN,
+      access: AccessEnum.USER,
+    },
+  },
+  {
+    path: "/update/question",
+    name: "更新题目",
+    component: AddQuestionView,
+    meta: {
+      hideInMenu: true,
+      access: AccessEnum.USER,
+    },
+  },
+  {
+    path: "/manage/question",
+    name: "管理题目",
+    component: ManageQuestionView,
+    meta: {
+      access: AccessEnum.ADMIN,
     },
   },
   {
     path: "/noAuth",
     name: "无权限",
     component: NoAuth,
+    meta: {
+      hideInMenu: true,
+    },
   },
   {
     path: "/about",
