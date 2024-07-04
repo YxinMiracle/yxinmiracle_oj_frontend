@@ -1,37 +1,46 @@
 <template>
-  <div id="code-editor" ref="codeEditorRef" style="min-height: 400px"></div>
-  <button @click="fillValue">填充之</button>
+  <div
+    id="code-editor"
+    ref="codeEditorRef"
+    style="min-height: 600px; height: 70vh"
+  ></div>
 </template>
 
 <script setup lang="ts">
 import * as monaco from "monaco-editor";
-import { defineProps, onMounted, ref, toRaw, withDefaults } from "vue";
+import { defineProps, onMounted, ref, toRaw, watch, withDefaults } from "vue";
 
 /**
  * 定义组件属性的类型
  */
 interface Props {
   value: string;
+  language?: string;
   handleChange: (value: string) => void;
 }
 
 // 设定默认值
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
+  language: () => "java",
   handleChange: (value: string) => {
     console.log(value);
   },
 });
 
+watch(
+  () => props.language,
+  () => {
+    monaco.editor.setModelLanguage(
+      // 踩坑一定要使用toRaw
+      toRaw(codeEditor.value).getModel(),
+      props.language
+    );
+  }
+);
+
 const codeEditorRef = ref();
 const codeEditor = ref();
-
-const fillValue = () => {
-  if (!codeEditor.value) {
-    return;
-  }
-  toRaw(codeEditor.value).setValue("xxxx");
-};
 
 onMounted(() => {
   if (!codeEditorRef.value) {
