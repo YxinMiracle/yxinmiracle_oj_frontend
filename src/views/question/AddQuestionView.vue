@@ -9,10 +9,12 @@
         <a-input-tag v-model="form.tags" placeholder="请选择标签" allow-clear />
       </a-form-item>
       <a-form-item field="content" label="题目内容">
-        <MdEditor
-          :value="form.content"
-          :handle-change="onContentChange"
-        ></MdEditor>
+        <div style="min-height: 400px">
+          <MdEditor
+            :value="form.content"
+            :handle-change="onContentChange"
+          ></MdEditor>
+        </div>
       </a-form-item>
       <a-form-item field="answer" label="答案">
         <MdEditor

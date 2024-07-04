@@ -28,7 +28,7 @@
 import { reactive, ref } from "vue";
 import { UserControllerService, UserLoginRequest } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const loading = ref(false);
@@ -40,14 +40,16 @@ const loginForm = reactive({
 
 const router = useRouter();
 const store = useStore();
+const route = useRoute(); // 获取当前路由对象
 
 const handleSubmit = async () => {
   loading.value = true;
   const res = await UserControllerService.userLoginUsingPost(loginForm);
   if (res.code === 0) {
+    const redirectUrl = route.query.redirect || "/"; // 从当前路由的query中获取redirect参数
     await store.dispatch("user/getLoginUser");
     router.push({
-      path: "/",
+      path: redirectUrl,
       replace: true,
     });
     Message.success("登录成功");
