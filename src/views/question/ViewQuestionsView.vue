@@ -21,13 +21,15 @@
               </a-descriptions>
               <MdViewer :value="question?.content || ''"></MdViewer>
               <template #extra>
-                <a-tag
-                  v-for="(tag, index) in question.tags"
-                  :key="index"
-                  color="green"
-                >
-                  {{ tag }}
-                </a-tag>
+                <a-space>
+                  <a-tag
+                    v-for="(tag, index) in question.tags"
+                    :key="index"
+                    color="green"
+                  >
+                    {{ tag }}
+                  </a-tag>
+                </a-space>
               </template>
             </a-card>
           </a-tab-pane>
@@ -72,7 +74,6 @@ import { defineProps, onMounted, ref, watchEffect, withDefaults } from "vue";
 import {
   QuestionControllerService,
   QuestionSubmitAddRequest,
-  QuestionSubmitControllerService,
   QuestionVO,
 } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
@@ -107,7 +108,7 @@ const form = ref<QuestionSubmitAddRequest>({
 });
 
 const doSubmit = async () => {
-  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost(
+  const res = await QuestionControllerService.doQuestionSubmitUsingPost(
     form.value
   );
   if (res.code === 0) {

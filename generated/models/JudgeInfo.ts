@@ -2,4 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type JudgeInfo = {};
+export type JudgeInfo = {
+    memory?: number;
+    message?: string;
+    time?: number;
+};
+

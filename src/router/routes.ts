@@ -8,6 +8,7 @@ import UserLayout from "@/layouts/UserLayout.vue";
 import AddQuestionView from "@/views/question/AddQuestionView.vue";
 import ManageQuestionView from "@/views/question/QuestionManageView.vue";
 import QuestionsView from "@/views/question/QuestionsView.vue";
+import QuestionsSubmitView from "@/views/question/QuestionsSubmitView.vue";
 import ViewQuestionsView from "@/views/question/ViewQuestionsView.vue";
 import AccessEnum from "@/access/accessEnum";
 
@@ -49,6 +50,11 @@ export const routes: Array<RouteRecordRaw> = [
     meta: {
       hideInMenu: true,
     },
+  },
+  {
+    path: "/question_submit",
+    name: "题目提交记录",
+    component: QuestionsSubmitView,
   },
   {
     path: "/add/question",
