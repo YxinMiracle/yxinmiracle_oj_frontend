@@ -1,26 +1,27 @@
 <template>
   <div class="userlogin">
-    <h2>用户登录</h2>
-    <a-form
-      label-align="left"
-      auto-label-width
-      :model="loginForm"
-      style="max-width: 60%; margin: 0 auto"
-      @submit="handleSubmit"
-    >
-      <a-form-item field="userAccount" tooltip="请输入帐号" label="用户帐号">
-        <a-input v-model="loginForm.userAccount" placeholder="请输入帐号" />
-      </a-form-item>
-      <a-form-item field="userPassword" label="密码">
-        <a-input-password
-          v-model="loginForm.userPassword"
-          placeholder="请输入密码"
-        />
-      </a-form-item>
-      <a-form-item>
-        <a-button html-type="submit">Submit</a-button>
-      </a-form-item>
-    </a-form>
+    <a-card class="card">
+      <h2>用户登录</h2>
+      <a-form
+        label-align="left"
+        auto-label-width
+        :model="loginForm"
+        @submit="handleSubmit"
+      >
+        <a-form-item field="userAccount" tooltip="请输入帐号" label="用户帐号">
+          <a-input v-model="loginForm.userAccount" placeholder="请输入帐号" />
+        </a-form-item>
+        <a-form-item field="userPassword" label="密码">
+          <a-input-password
+            v-model="loginForm.userPassword"
+            placeholder="请输入密码"
+          />
+        </a-form-item>
+        <a-form-item>
+          <a-button html-type="submit">Submit</a-button>
+        </a-form-item>
+      </a-form>
+    </a-card>
   </div>
 </template>
 
@@ -59,3 +60,28 @@ const handleSubmit = async () => {
   loading.value = false;
 };
 </script>
+
+<style scoped>
+.userlogin {
+  --content-width-size: 90%;
+  --page-width: 100vw;
+}
+
+/* 如果屏幕宽度至少为600px，适用于中等大小的屏幕 */
+@media (min-width: 700px) {
+  .userlogin {
+    --content-width-size: 80%;
+  }
+}
+
+/* 如果屏幕宽度至少为1000px，适用于大屏幕 */
+@media (min-width: 1200px) {
+  .userlogin {
+    --content-width-size: 70%;
+  }
+}
+
+.userlogin .card {
+  width: calc(var(--page-width) * (var(--content-width-size) / 100));
+}
+</style>

@@ -15,6 +15,7 @@
     </div>
     <a-divider></a-divider>
     <a-table
+      :loading="loading"
       :columns="columns"
       :data="dataList"
       @page-change="onPageChange"
@@ -63,6 +64,7 @@ import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
 import moment from "moment";
 
+const loading = ref(false);
 const show = ref(true);
 const dataList = ref([]);
 const total = ref(0);
@@ -82,6 +84,7 @@ const doSubmit = () => {
 };
 
 const loadData = async () => {
+  loading.value = true;
   const res = await QuestionControllerService.listQuestionVoByPageUsingPost(
     searchParams.value
   );
@@ -91,6 +94,7 @@ const loadData = async () => {
   } else {
     Message.error("获取数据失败");
   }
+  loading.value = false;
 };
 
 onMounted(() => {

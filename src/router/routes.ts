@@ -10,6 +10,7 @@ import ManageQuestionView from "@/views/question/QuestionManageView.vue";
 import QuestionsView from "@/views/question/QuestionsView.vue";
 import QuestionsSubmitView from "@/views/question/QuestionsSubmitView.vue";
 import ViewQuestionsView from "@/views/question/ViewQuestionsView.vue";
+import FenView from "@/views/lian/FenView.vue";
 import AccessEnum from "@/access/accessEnum";
 
 export const routes: Array<RouteRecordRaw> = [
@@ -88,6 +89,11 @@ export const routes: Array<RouteRecordRaw> = [
     meta: {
       hideInMenu: true,
     },
+  },
+  {
+    path: "/fen",
+    name: "蜂窝页面",
+    component: FenView,
   },
   {
     path: "/about",

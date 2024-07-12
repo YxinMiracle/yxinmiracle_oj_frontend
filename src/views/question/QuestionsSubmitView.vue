@@ -33,6 +33,14 @@
       <template #judgeInfo="{ record }">
         {{ JSON.stringify(record.judgeInfo) }}
       </template>
+      <template #status="{ record }">
+        <a-tag v-if="record.status === 0" color="cyan" bordered>等待中</a-tag>
+        <a-tag v-if="record.status === 1" color="arcoblue" bordered
+          >判题中</a-tag
+        >
+        <a-tag v-if="record.status === 3" color="magenta" bordered>失败</a-tag>
+        <a-tag v-if="record.status === 2" color="green" bordered>成功</a-tag>
+      </template>
       <template #user="{ record }">
         {{ record.userVO.userName }}
       </template>
@@ -103,7 +111,7 @@ const columns = [
   },
   {
     title: "判题状态",
-    dataIndex: "status",
+    slotName: "status",
   },
   {
     title: "题目 ID",

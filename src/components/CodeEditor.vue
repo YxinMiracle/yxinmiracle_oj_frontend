@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="code-editor"
-    ref="codeEditorRef"
-    style="min-height: 600px; height: 70vh"
-  ></div>
+  <div id="code-editor" ref="codeEditorRef" style="min-height: 700px"></div>
 </template>
 
 <script setup lang="ts">
@@ -16,6 +12,7 @@ import { defineProps, onMounted, ref, toRaw, watch, withDefaults } from "vue";
 interface Props {
   value: string;
   language?: string;
+  editorTheme: string;
   handleChange: (value: string) => void;
 }
 
@@ -23,10 +20,13 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   value: () => "",
   language: () => "java",
+  editorTheme: () => "vs-dark",
   handleChange: (value: string) => {
     console.log(value);
   },
 });
+
+const minHeight = ref(0);
 
 watch(
   () => props.language,
@@ -36,6 +36,13 @@ watch(
       toRaw(codeEditor.value).getModel(),
       props.language
     );
+  }
+);
+
+watch(
+  () => props.editorTheme,
+  () => {
+    monaco.editor.setTheme(props.editorTheme);
   }
 );
 
@@ -53,18 +60,30 @@ onMounted(() => {
     automaticLayout: true,
     minimap: {
       enabled: true,
-      scale: 10,
+      scale: 5,
     },
     lineNumbers: "on",
+    codeLens: true, // 代码镜头
     roundedSelection: false,
     scrollBeyondLastLine: false,
     readOnly: false,
-    theme: "vs-dark",
+    theme: "vs",
   });
 
   codeEditor.value.onDidChangeModelContent(() => {
     props.handleChange(toRaw(codeEditor.value).getValue());
   });
+
+  if (codeEditorRef.value && codeEditorRef.value.parentNode) {
+    minHeight.value = codeEditorRef.value.parentNode.clientHeight;
+  }
+});
+
+// 可以添加一个resize监听器，以便在窗口大小改变时更新高度
+window.addEventListener("resize", () => {
+  if (codeEditorRef.value && codeEditorRef.value.parentNode) {
+    minHeight.value = codeEditorRef.value.parentNode.clientHeight;
+  }
 });
 </script>
 
