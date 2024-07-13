@@ -1,6 +1,7 @@
 <template>
   <div id="questionManageView">
     <a-table
+      :loading="loading"
       :columns="columns"
       :data="dataList"
       @page-change="onPageChange"
@@ -11,6 +12,22 @@
         total,
       }"
     >
+      <template #content="{ record }">
+        {{
+          record.content.length > 50
+            ? record.content.substring(0, 50) + "..."
+            : record.content
+        }}
+      </template>
+      <template #tags="{ record }">
+        <vue-json-pretty :data="JSON.parse(record.tags)" />
+      </template>
+      <template #judgeConfig="{ record }">
+        <vue-json-pretty :data="JSON.parse(record.judgeConfig)" />
+      </template>
+      <template #judgeCase="{ record }">
+        <vue-json-pretty :deep="2" :data="JSON.parse(record.judgeCase)" />
+      </template>
       <template #optional="{ record }">
         <a-space>
           <a-button type="primary" @click="doUpdate(record)">修改</a-button>
@@ -26,16 +43,19 @@ import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
+import VueJsonPretty from "vue-json-pretty";
 
 const show = ref(true);
+const loading = ref(false);
 const dataList = ref([]);
 const total = ref(0);
 const searchParams = ref({
-  pageSize: 1,
+  pageSize: 12,
   current: 1,
 });
 
 const loadData = async () => {
+  loading.value = true;
   const res = await QuestionControllerService.listQuestionByPageUsingPost(
     searchParams.value
   );
@@ -45,6 +65,7 @@ const loadData = async () => {
   } else {
     Message.error("获取数据失败");
   }
+  loading.value = false;
 };
 
 onMounted(() => {
@@ -55,18 +76,21 @@ const columns = [
   {
     title: "id",
     dataIndex: "id",
+    width: 100,
   },
   {
     title: "标题",
     dataIndex: "title",
+    width: 100,
   },
   {
     title: "内容",
-    dataIndex: "content",
+    slotName: "content",
+    width: 100,
   },
   {
     title: "标签",
-    dataIndex: "tags",
+    slotName: "tags",
   },
   {
     title: "答案",
@@ -82,11 +106,11 @@ const columns = [
   },
   {
     title: "判题配置",
-    dataIndex: "judgeConfig",
+    slotName: "judgeConfig",
   },
   {
     title: "判题用例",
-    dataIndex: "judgeCase",
+    slotName: "judgeCase",
   },
   {
     title: "用户Id",
@@ -140,5 +164,7 @@ const doDelete = async (question: Question) => {
 
 <style scoped>
 #questionManageView {
+  max-width: 80%;
+  margin: 0 auto;
 }
 </style>

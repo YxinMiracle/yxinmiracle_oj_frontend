@@ -20,6 +20,7 @@
     </div>
     <a-divider></a-divider>
     <a-table
+      :loading="loading"
       :columns="columns"
       :data="dataList"
       @page-change="onPageChange"
@@ -31,7 +32,7 @@
       }"
     >
       <template #judgeInfo="{ record }">
-        {{ JSON.stringify(record.judgeInfo) }}
+        <vue-json-pretty :data="record.judgeInfo" />
       </template>
       <template #status="{ record }">
         <a-tag v-if="record.status === 0" color="cyan" bordered>等待中</a-tag>
@@ -62,8 +63,10 @@ import {
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
 import moment from "moment";
+import VueJsonPretty from "vue-json-pretty";
 
 const show = ref(true);
+const loading = ref(false);
 const dataList = ref([]);
 const total = ref(0);
 const searchParams = ref<QuestionSubmitQueryRequest>({
@@ -81,6 +84,7 @@ const doSubmit = () => {
 };
 
 const loadData = async () => {
+  loading.value = true;
   const res = await QuestionControllerService.listQuestionSubmitByPageUsingPost(
     searchParams.value
   );
@@ -90,6 +94,7 @@ const loadData = async () => {
   } else {
     Message.error("获取数据失败");
   }
+  loading.value = false;
 };
 
 onMounted(() => {
