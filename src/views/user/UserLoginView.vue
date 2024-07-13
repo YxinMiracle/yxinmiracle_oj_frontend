@@ -63,25 +63,32 @@ const handleSubmit = async () => {
 
 <style scoped>
 .userlogin {
-  --content-width-size: 90%;
+  --content-width-size: 90;
   --page-width: 100vw;
+  --page-heigh: 100vh;
+  --card-height: 146.98px;
+  --header-height: 67.09px;
 }
 
 /* 如果屏幕宽度至少为600px，适用于中等大小的屏幕 */
 @media (min-width: 700px) {
   .userlogin {
-    --content-width-size: 80%;
+    --content-width-size: 80;
   }
 }
 
 /* 如果屏幕宽度至少为1000px，适用于大屏幕 */
 @media (min-width: 1200px) {
   .userlogin {
-    --content-width-size: 70%;
+    --content-width-size: 70;
   }
 }
 
 .userlogin .card {
   width: calc(var(--page-width) * (var(--content-width-size) / 100));
+  margin: 0 auto;
+  margin-top: calc(
+    (var(--page-heigh) - var(--header-height)) / 2 - var(--card-height) * 1.5
+  );
 }
 </style>
